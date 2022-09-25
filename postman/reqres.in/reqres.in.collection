@@ -1,202 +1,676 @@
 {
 	"info": {
-		"_postman_id": "79f03f41-c41d-4107-91ec-0fb09094e54d",
+		"_postman_id": "ca1faa4c-2474-4fbd-a935-fd066de59731",
 		"name": "reqres.in",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "List Users",
-			"event": [
+			"name": "Users",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Contains reqres.in support footer text\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.support.text).to.eql(\"To keep ReqRes free, contributions towards server costs are appreciated!\");\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}",
-					"host": [
-						"{{baseUrl}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "List User 1",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"User 1 has an email of george.bluth@reqres.in\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.data.email).to.eql(\"george.bluth@reqres.in\");\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/1",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add User",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var jsonData = pm.response.json();\r",
-							"pm.environment.set(\"userId\", jsonData.data.id);\r",
-							"\r",
-							"pm.test(\"Status code is 201\", function () {\r",
-							"    pm.response.to.have.status(201);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Email is a.regis@reqres.in\", function () {    \r",
-							"    pm.expect(jsonData.data.email).to.eql(\"a.regis@reqres.in\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"First name is Anthony\", function () {    \r",
-							"    pm.expect(jsonData.data.first_name).to.eql(\"Anthony\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Last name is Regis\", function () {    \r",
-							"    pm.expect(jsonData.data.last_name).to.eql(\"Regis\");\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"data\": {\r\n        \"id\": 2328400,\r\n        \"email\": \"{{email}}\",\r\n        \"first_name\": \"{{firstName}}\",\r\n        \"last_name\": \"{{lastName}}\",\r\n        \"avatar\": \"https://reqres.in/img/faces/aregis-image.jpg\"\r\n    },\r\n    \"support\": {\r\n        \"url\": \"https://reqres.in/#support-heading\",\r\n        \"text\": \"Thank you reqres team for allowing us to try your site!\"\r\n    }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "Positive Testing",
+					"item": [
+						{
+							"name": "List User 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"\r",
+											"const schema = {\r",
+											"  \"type\": \"object\",\r",
+											"  \"properties\": {\r",
+											"    \"data\": {\r",
+											"      \"type\": \"object\",\r",
+											"      \"properties\": {\r",
+											"        \"id\": {\r",
+											"          \"type\": \"integer\"\r",
+											"        },\r",
+											"        \"email\": {\r",
+											"          \"type\": \"string\"\r",
+											"        },\r",
+											"        \"first_name\": {\r",
+											"          \"type\": \"string\"\r",
+											"        },\r",
+											"        \"last_name\": {\r",
+											"          \"type\": \"string\"\r",
+											"        },\r",
+											"        \"avatar\": {\r",
+											"          \"type\": \"string\"\r",
+											"        }\r",
+											"      },\r",
+											"      \"required\": [\r",
+											"        \"id\",\r",
+											"        \"email\",\r",
+											"        \"first_name\",\r",
+											"        \"last_name\",\r",
+											"        \"avatar\"\r",
+											"      ]\r",
+											"    },\r",
+											"    \"support\": {\r",
+											"      \"type\": \"object\",\r",
+											"      \"properties\": {\r",
+											"        \"url\": {\r",
+											"          \"type\": \"string\"\r",
+											"        },\r",
+											"        \"text\": {\r",
+											"          \"type\": \"string\"\r",
+											"        }\r",
+											"      },\r",
+											"      \"required\": [\r",
+											"        \"url\",\r",
+											"        \"text\"\r",
+											"      ]\r",
+											"    }\r",
+											"  },\r",
+											"  \"required\": [\r",
+											"    \"data\",\r",
+											"    \"support\"\r",
+											"  ]\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Content-Type header is application/json; charset=utf-8\", function () {\r",
+											"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Json response schema is correct\", function() {\r",
+											"    pm.response.to.have.jsonSchema(schema);    \r",
+											"});\r",
+											"\r",
+											"pm.test(\"User 1 fields contains correct values\", function () {    \r",
+											"    pm.expect(jsonData.data.email).to.eql(\"george.bluth@reqres.in\");\r",
+											"    pm.expect(jsonData.data.first_name).to.eql(\"George\");\r",
+											"    pm.expect(jsonData.data.last_name).to.eql(\"Bluth\");\r",
+											"    pm.expect(jsonData.data.avatar).to.eql(\"https://reqres.in/img/faces/1-image.jpg\");    \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{usersPath}}/1",
+									"host": [
+										"{{baseUrl}}{{usersPath}}"
+									],
+									"path": [
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"pm.environment.set(\"userId\", jsonData.data.id);\r",
+											"\r",
+											"const schema = {\r",
+											"  \"type\": \"object\",\r",
+											"  \"properties\": {\r",
+											"    \"data\": {\r",
+											"      \"type\": \"object\",\r",
+											"      \"properties\": {\r",
+											"        \"id\": {\r",
+											"          \"type\": \"integer\"\r",
+											"        },\r",
+											"        \"email\": {\r",
+											"          \"type\": \"string\"\r",
+											"        },\r",
+											"        \"first_name\": {\r",
+											"          \"type\": \"string\"\r",
+											"        },\r",
+											"        \"last_name\": {\r",
+											"          \"type\": \"string\"\r",
+											"        },\r",
+											"        \"avatar\": {\r",
+											"          \"type\": \"string\"\r",
+											"        }\r",
+											"      },\r",
+											"      \"required\": [\r",
+											"        \"id\",\r",
+											"        \"email\",\r",
+											"        \"first_name\",\r",
+											"        \"last_name\",\r",
+											"        \"avatar\"\r",
+											"      ]\r",
+											"    },\r",
+											"    \"support\": {\r",
+											"      \"type\": \"object\",\r",
+											"      \"properties\": {\r",
+											"        \"url\": {\r",
+											"          \"type\": \"string\"\r",
+											"        },\r",
+											"        \"text\": {\r",
+											"          \"type\": \"string\"\r",
+											"        }\r",
+											"      },\r",
+											"      \"required\": [\r",
+											"        \"url\",\r",
+											"        \"text\"\r",
+											"      ]\r",
+											"    },\r",
+											"    \"id\": {\r",
+											"      \"type\": \"string\"\r",
+											"    },\r",
+											"    \"createdAt\": {\r",
+											"      \"type\": \"string\"\r",
+											"    }\r",
+											"  },\r",
+											"  \"required\": [\r",
+											"    \"data\",\r",
+											"    \"support\",\r",
+											"    \"id\",\r",
+											"    \"createdAt\"\r",
+											"  ]\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Content-Type header is application/json; charset=utf-8\", function () {\r",
+											"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Json response schema is correct\", function() {\r",
+											"    pm.response.to.have.jsonSchema(schema);    \r",
+											"});\r",
+											"\r",
+											"pm.test(\"User fields contains correct values\", function () {    \r",
+											"    pm.expect(jsonData.data.email).to.eql(\"a.regis@reqres.in\");\r",
+											"    pm.expect(jsonData.data.first_name).to.eql(\"Anthony\");\r",
+											"    pm.expect(jsonData.data.last_name).to.eql(\"Regis\");\r",
+											"    pm.expect(jsonData.data.avatar).to.eql(\"https://reqres.in/img/faces/aregis-image.jpg\");    \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"data\": {\r\n        \"id\": 2328400,\r\n        \"email\": \"{{email}}\",\r\n        \"first_name\": \"{{firstName}}\",\r\n        \"last_name\": \"{{lastName}}\",\r\n        \"avatar\": \"{{avatar}}\"\r\n    },\r\n    \"support\": {\r\n        \"url\": \"https://reqres.in/#support-heading\",\r\n        \"text\": \"Thank you reqres team for allowing us to try your site!\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{usersPath}}",
+									"host": [
+										"{{baseUrl}}{{usersPath}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const schema = {\r",
+											"  \"type\": \"object\",\r",
+											"  \"properties\": {\r",
+											"    \"data\": {\r",
+											"      \"type\": \"object\",\r",
+											"      \"properties\": {\r",
+											"        \"email\": {\r",
+											"          \"type\": \"string\"\r",
+											"        },\r",
+											"        \"first_name\": {\r",
+											"          \"type\": \"string\"\r",
+											"        },\r",
+											"        \"last_name\": {\r",
+											"          \"type\": \"string\"\r",
+											"        },\r",
+											"        \"avatar\": {\r",
+											"          \"type\": \"string\"\r",
+											"        }\r",
+											"      },\r",
+											"      \"required\": [\r",
+											"        \"email\",\r",
+											"        \"first_name\",\r",
+											"        \"last_name\",\r",
+											"        \"avatar\"\r",
+											"      ]\r",
+											"    },\r",
+											"    \"support\": {\r",
+											"      \"type\": \"object\",\r",
+											"      \"properties\": {\r",
+											"        \"url\": {\r",
+											"          \"type\": \"string\"\r",
+											"        },\r",
+											"        \"text\": {\r",
+											"          \"type\": \"string\"\r",
+											"        }\r",
+											"      },\r",
+											"      \"required\": [\r",
+											"        \"url\",\r",
+											"        \"text\"\r",
+											"      ]\r",
+											"    },\r",
+											"    \"updatedAt\": {\r",
+											"      \"type\": \"string\"\r",
+											"    }\r",
+											"  },\r",
+											"  \"required\": [\r",
+											"    \"data\",\r",
+											"    \"support\",\r",
+											"    \"updatedAt\"\r",
+											"  ]\r",
+											"}\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Content-Type header is application/json; charset=utf-8\", function () {\r",
+											"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Json response schema is correct\", function() {\r",
+											"    pm.response.to.have.jsonSchema(schema);    \r",
+											"});\r",
+											"\r",
+											"pm.test(\"Email change confirmed to anthony.regis@reqres.in\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.data.email).to.eql(\"anthony.regis@reqres.in\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"data\": {\r\n        \"email\": \"anthony.regis@reqres.in\",\r\n        \"first_name\": \"{{firstName}}\",\r\n        \"last_name\": \"{{lastName}}\",\r\n        \"avatar\": \"{{avatar}}\"\r\n    },\r\n    \"support\": {\r\n        \"url\": \"https://reqres.in/#support-heading\",\r\n        \"text\": \"Thank you reqres team for allowing us to try your site!\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{usersPath}}/{{userId}}",
+									"host": [
+										"{{baseUrl}}{{usersPath}}"
+									],
+									"path": [
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}{{usersPath}}/{{userId}}",
+									"host": [
+										"{{baseUrl}}{{usersPath}}"
+									],
+									"path": [
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
 						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}",
-					"host": [
-						"{{baseUrl}}"
 					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update User",
-			"event": [
+				},
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Email change confirmed to anthony.regis@reqres.in\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.data.email).to.eql(\"anthony.regis@reqres.in\");\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"data\": {\r\n        \"email\": \"anthony.regis@reqres.in\",\r\n        \"first_name\": \"Anthony\",\r\n        \"last_name\": \"Regis\",\r\n        \"avatar\": \"https://reqres.in/img/faces/aregis-image.jpg\"\r\n    },\r\n    \"support\": {\r\n        \"url\": \"https://reqres.in/#support-heading\",\r\n        \"text\": \"Thank you reqres team for allowing us to try your site!\"\r\n    }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "Negative Testing",
+					"item": [
+						{
+							"name": "List User - Inexistent ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{usersPath}}/1236",
+									"host": [
+										"{{baseUrl}}{{usersPath}}"
+									],
+									"path": [
+										"1236"
+									]
+								}
+							},
+							"response": []
 						}
-					}
+					]
 				},
-				"url": {
-					"raw": "{{baseUrl}}/{{userId}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"{{userId}}"
+				{
+					"name": "Destructive Testing",
+					"item": [
+						{
+							"name": "List User - Special character ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"HTML response contains '400 Bad Request'\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"400 Bad Request\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{usersPath}}/1236464654654654649879asa;ldkjf92834;ajfd;aksdf;adkf[poi134-402345-09456-098-09)(*^(*^%(*^()&_)*_+90",
+									"host": [
+										"{{baseUrl}}{{usersPath}}"
+									],
+									"path": [
+										"1236464654654654649879asa;ldkjf92834;ajfd;aksdf;adkf[poi134-402345-09456-098-09)(*^(*^%(*^()&_)*_+90"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add User - Host header missing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"HTML response contains '400 Bad Request'\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"400 Bad Request\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"host": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"data\": {\r\n        \"id\": 2328400,\r\n        \"email\": \"{{email}}\",\r\n        \"first_name\": \"{{firstName}}\",\r\n        \"last_name\": \"{{lastName}}\",\r\n        \"avatar\": \"{{avatar}}\"\r\n    },\r\n    \"support\": {\r\n        \"url\": \"https://reqres.in/#support-heading\",\r\n        \"text\": \"Thank you reqres team for allowing us to try your site!\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{usersPath}}",
+									"host": [
+										"{{baseUrl}}{{usersPath}}"
+									]
+								}
+							},
+							"response": []
+						}
 					]
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Delete User",
-			"event": [
+			"name": "Login",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 204\", function () {\r",
-							"    pm.response.to.have.status(204);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/{{userId}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"{{userId}}"
+					"name": "Positive Testing",
+					"item": [
+						{
+							"name": "Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Content-Type header is application/json; charset=utf-8\", function () {\r",
+											"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Token is generated\", function() {\r",
+											"    pm.expect(jsonData).have.property(\"token\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"cityslicka\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{loginPath}}",
+									"host": [
+										"{{baseUrl}}{{loginPath}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Negative Testing",
+					"item": [
+						{
+							"name": "Login - Missing password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Content-Type header is application/json; charset=utf-8\", function () {\r",
+											"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"'missing password' error message returned\", function() {\r",
+											"    pm.expect(jsonData.error).to.eql(\"Missing password\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{loginPath}}",
+									"host": [
+										"{{baseUrl}}{{loginPath}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login - Inexistent user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Content-Type header is application/json; charset=utf-8\", function () {\r",
+											"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"'user not found error' message returned\", function() {\r",
+											"    pm.expect(jsonData.error).to.eql(\"user not found\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"a.regis@reqres.in\",\r\n    \"password\": \"passw0rd\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}{{loginPath}}",
+									"host": [
+										"{{baseUrl}}{{loginPath}}"
+									]
+								}
+							},
+							"response": []
+						}
 					]
 				}
-			},
-			"response": []
+			]
 		}
 	],
 	"event": [
@@ -214,8 +688,8 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"pm.test(\"Response time is less than 3000ms\", function () {",
-					"    pm.expect(pm.response.responseTime).to.be.below(3000);",
+					"pm.test(\"Response time is less than 700ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(700);",
 					"});"
 				]
 			}

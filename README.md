@@ -6,9 +6,9 @@
 **Postman tasks (Restful services):** 
 - reqres.in
 - petstore.swagger.io
-- otherservices - Contains all other get requests.
+- otherservices (other restful services combined here)
 
-reqres.in and petstore.swagger.io includes assertions and variable environments. Both test ran in Postman and Newman.
+reqres.in and petstore.swagger.io includes test requests, assertions and variable environments. 
 
 <br>
 
